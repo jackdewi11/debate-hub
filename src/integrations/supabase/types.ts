@@ -14,16 +14,215 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ballot_entries: {
+        Row: {
+          ballot_id: string
+          competitor_id: string
+          created_at: string | null
+          feedback: string | null
+          id: string
+          rank: number | null
+          score: number | null
+        }
+        Insert: {
+          ballot_id: string
+          competitor_id: string
+          created_at?: string | null
+          feedback?: string | null
+          id?: string
+          rank?: number | null
+          score?: number | null
+        }
+        Update: {
+          ballot_id?: string
+          competitor_id?: string
+          created_at?: string | null
+          feedback?: string | null
+          id?: string
+          rank?: number | null
+          score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ballot_entries_ballot_id_fkey"
+            columns: ["ballot_id"]
+            isOneToOne: false
+            referencedRelation: "ballots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ballot_entries_competitor_id_fkey"
+            columns: ["competitor_id"]
+            isOneToOne: false
+            referencedRelation: "competitors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ballots: {
+        Row: {
+          created_at: string | null
+          format: string | null
+          id: string
+          judge_id: string
+          notes: string | null
+          round_number: number | null
+          session_name: string | null
+          status: string | null
+          submitted_at: string | null
+          tournament_name: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          format?: string | null
+          id?: string
+          judge_id: string
+          notes?: string | null
+          round_number?: number | null
+          session_name?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          tournament_name?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          format?: string | null
+          id?: string
+          judge_id?: string
+          notes?: string | null
+          round_number?: number | null
+          session_name?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          tournament_name?: string | null
+        }
+        Relationships: []
+      }
+      competitors: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_guest: boolean | null
+          name: string
+          school: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_guest?: boolean | null
+          name: string
+          school?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_guest?: boolean | null
+          name?: string
+          school?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          school: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          school?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          school?: string | null
+        }
+        Relationships: []
+      }
+      tournaments: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          end_date: string | null
+          id: string
+          location: string | null
+          name: string
+          start_date: string | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          end_date?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          start_date?: string | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          end_date?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          start_date?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_role: { Args: { _user_id: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      initialize_user_profile: {
+        Args: { _email: string; _full_name: string; _role?: string }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "judge" | "student"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +349,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "judge", "student"],
+    },
   },
 } as const
