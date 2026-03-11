@@ -1,18 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const { user, role } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && role) {
+      if (role === "judge") navigate("/judge", { replace: true });
+      else if (role === "admin") navigate("/admin", { replace: true });
+      else navigate("/dashboard", { replace: true });
+    }
+  }, [user, role, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Will connect to Supabase auth
-    window.location.href = "/dashboard";
+    setSubmitting(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setSubmitting(false);
+
+    if (error) {
+      toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
+    }
+    // Redirect handled by useEffect above when auth state changes
   };
 
   return (
@@ -48,8 +71,12 @@ export default function LoginPage() {
               required
             />
           </div>
-          <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-            Sign In
+          <Button
+            type="submit"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+            disabled={submitting}
+          >
+            {submitting ? "Signing in…" : "Sign In"}
           </Button>
         </form>
         <p className="text-center text-sm text-muted-foreground">

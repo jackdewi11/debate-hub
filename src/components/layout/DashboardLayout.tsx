@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Trophy,
@@ -8,12 +8,13 @@ import {
   BarChart3,
   Settings,
   LogOut,
-  GraduationCap,
   Menu,
   X,
+  Plus,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -23,35 +24,27 @@ interface DashboardLayoutProps {
 const NAV_ITEMS = {
   student: [
     { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-    { label: "Round History", path: "/dashboard/history", icon: ClipboardCheck },
-    { label: "Analytics", path: "/dashboard/analytics", icon: BarChart3 },
-    { label: "Settings", path: "/dashboard/settings", icon: Settings },
-  ],
-  coach: [
-    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-    { label: "Students", path: "/dashboard/students", icon: Users },
-    { label: "Practice", path: "/dashboard/practice", icon: GraduationCap },
-    { label: "Analytics", path: "/dashboard/analytics", icon: BarChart3 },
-    { label: "Settings", path: "/dashboard/settings", icon: Settings },
   ],
   judge: [
-    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-    { label: "Assignments", path: "/dashboard/assignments", icon: ClipboardCheck },
-    { label: "Settings", path: "/dashboard/settings", icon: Settings },
+    { label: "Dashboard", path: "/judge", icon: LayoutDashboard },
+    { label: "New Ballot", path: "/judge/ballot/new", icon: Plus },
   ],
   admin: [
-    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-    { label: "Tournaments", path: "/dashboard/tournaments", icon: Trophy },
-    { label: "Judges", path: "/dashboard/judges", icon: Users },
-    { label: "Analytics", path: "/dashboard/analytics", icon: BarChart3 },
-    { label: "Settings", path: "/dashboard/settings", icon: Settings },
+    { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
   ],
 };
 
 export default function DashboardLayout({ children, role = "student" }: DashboardLayoutProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navItems = NAV_ITEMS[role as keyof typeof NAV_ITEMS] ?? NAV_ITEMS.student;
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/login");
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -82,7 +75,10 @@ export default function DashboardLayout({ children, role = "student" }: Dashboar
           })}
         </nav>
         <div className="border-t border-sidebar-border p-3">
-          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors">
+          <button
+            onClick={handleSignOut}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
+          >
             <LogOut className="h-4 w-4" />
             Sign Out
           </button>
@@ -125,6 +121,13 @@ export default function DashboardLayout({ children, role = "student" }: Dashboar
                   </Link>
                 );
               })}
+              <button
+                onClick={handleSignOut}
+                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors mt-4"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </button>
             </aside>
           </div>
         )}

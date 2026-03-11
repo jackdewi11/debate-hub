@@ -11,17 +11,61 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = "/dashboard";
+    if (!role) {
+      toast({ title: "Please select a role", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName, role },
+        emailRedirectTo: window.location.origin,
+      },
+    });
+
+    setSubmitting(false);
+
+    if (error) {
+      toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
+    } else {
+      setSuccess(true);
+    }
   };
+
+  if (success) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background p-4">
+        <div className="w-full max-w-sm space-y-6 text-center">
+          <Trophy className="h-10 w-10 text-gold mx-auto" />
+          <h1 className="font-display text-2xl font-bold text-foreground">Check your email</h1>
+          <p className="text-muted-foreground">
+            We sent a confirmation link to <strong className="text-foreground">{email}</strong>.
+            Click the link to activate your account, then sign in.
+          </p>
+          <Link to="/login">
+            <Button variant="outline" className="mt-4">Back to Sign In</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
@@ -74,15 +118,18 @@ export default function SignupPage() {
                 <SelectValue placeholder="Select your role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="student">Student</SelectItem>
-                <SelectItem value="coach">Coach</SelectItem>
                 <SelectItem value="judge">Judge</SelectItem>
-                <SelectItem value="admin">Tournament Admin</SelectItem>
+                <SelectItem value="student">Student</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
               </SelectContent>
             </Select>
           </div>
-          <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-            Create Account
+          <Button
+            type="submit"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+            disabled={submitting}
+          >
+            {submitting ? "Creating account…" : "Create Account"}
           </Button>
         </form>
         <p className="text-center text-sm text-muted-foreground">
