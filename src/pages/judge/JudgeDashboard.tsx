@@ -6,17 +6,17 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ClipboardCheck, Plus, Clock } from "lucide-react";
+import { ClipboardCheck, Plus, Clock, Users } from "lucide-react";
 import { format } from "date-fns";
 
 export default function JudgeDashboard() {
   const { user, profile } = useAuth();
 
-  const { data: ballots = [], isLoading } = useQuery({
-    queryKey: ["judge-ballots", user?.id],
+  const { data: sessions = [], isLoading } = useQuery({
+    queryKey: ["judge-congress-sessions", user?.id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("ballots")
+        .from("congress_sessions")
         .select("*")
         .eq("judge_id", user!.id)
         .order("created_at", { ascending: false })
@@ -27,8 +27,8 @@ export default function JudgeDashboard() {
     enabled: !!user,
   });
 
-  const submitted = ballots.filter((b: any) => b.status === "submitted");
-  const drafts = ballots.filter((b: any) => b.status === "draft");
+  const submitted = sessions.filter((s: any) => s.status === "submitted");
+  const inProgress = sessions.filter((s: any) => s.status !== "submitted");
 
   return (
     <DashboardLayout role="judge">
@@ -72,8 +72,8 @@ export default function JudgeDashboard() {
                   <Clock className="h-5 w-5 text-warning" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{drafts.length}</p>
-                  <p className="text-sm text-muted-foreground">Drafts</p>
+                  <p className="text-2xl font-bold text-foreground">{inProgress.length}</p>
+                  <p className="text-sm text-muted-foreground">In Progress</p>
                 </div>
               </div>
             </CardContent>
@@ -82,58 +82,58 @@ export default function JudgeDashboard() {
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-primary/10 p-2">
-                  <ClipboardCheck className="h-5 w-5 text-primary" />
+                  <Users className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{ballots.length}</p>
-                  <p className="text-sm text-muted-foreground">Total Ballots</p>
+                  <p className="text-2xl font-bold text-foreground">{sessions.length}</p>
+                  <p className="text-sm text-muted-foreground">Total Sessions</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Recent Ballots */}
+        {/* Recent Sessions */}
         <Card className="shadow-card">
           <CardHeader>
-            <CardTitle className="font-display text-lg">Recent Ballots</CardTitle>
+            <CardTitle className="font-display text-lg">Recent Congress Sessions</CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
               <p className="text-muted-foreground">Loading…</p>
-            ) : ballots.length === 0 ? (
+            ) : sessions.length === 0 ? (
               <div className="text-center py-8">
                 <ClipboardCheck className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                <p className="text-muted-foreground">No ballots yet.</p>
+                <p className="text-muted-foreground">No sessions yet.</p>
                 <Link to="/judge/congress/new">
-                   <Button variant="outline" className="mt-3">Submit your first ballot</Button>
-                 </Link>
+                  <Button variant="outline" className="mt-3">Submit your first ballot</Button>
+                </Link>
               </div>
             ) : (
               <div className="space-y-3">
-                {ballots.slice(0, 10).map((ballot: any) => (
+                {sessions.slice(0, 10).map((session: any) => (
                   <div
-                    key={ballot.id}
+                    key={session.id}
                     className="flex items-center justify-between rounded-lg border border-border p-3 hover:bg-muted/50 transition-colors"
                   >
                     <div className="space-y-1">
                       <p className="font-medium text-foreground">
-                        {ballot.tournament_name || "Untitled"} — {ballot.session_name || "Session"}
+                        {session.tournament_name || "Untitled"} — {session.chamber_number || session.session_name || "Session"}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        Round {ballot.round_number} · {ballot.format?.toUpperCase()} ·{" "}
-                        {format(new Date(ballot.created_at), "MMM d, yyyy")}
+                        Round {session.round_number} · Congress ·{" "}
+                        {format(new Date(session.created_at), "MMM d, yyyy")}
                       </p>
                     </div>
                     <Badge
-                      variant={ballot.status === "submitted" ? "default" : "secondary"}
+                      variant={session.status === "submitted" ? "default" : "secondary"}
                       className={
-                        ballot.status === "submitted"
+                        session.status === "submitted"
                           ? "bg-success text-success-foreground"
                           : ""
                       }
                     >
-                      {ballot.status}
+                      {session.status}
                     </Badge>
                   </div>
                 ))}
