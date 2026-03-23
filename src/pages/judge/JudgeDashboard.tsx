@@ -105,9 +105,9 @@ export default function JudgeDashboard() {
               <div className="text-center py-8">
                 <ClipboardCheck className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground">No ballots yet.</p>
-                <Link to="/judge/ballot/new">
-                  <Button variant="outline" className="mt-3">Submit your first ballot</Button>
-                </Link>
+                <Link to="/judge/congress/new">
+                   <Button variant="outline" className="mt-3">Submit your first ballot</Button>
+                 </Link>
               </div>
             ) : (
               <div className="space-y-3">

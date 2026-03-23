@@ -41,9 +41,9 @@ const App = () => (
                 <JudgeDashboard />
               </ProtectedRoute>
             } />
-            <Route path="/judge/ballot/new" element={
+            <Route path="/judge/congress/new" element={
               <ProtectedRoute allowedRoles={["judge"]}>
-                <CongressBallotForm />
+                <CongressSessionForm />
               </ProtectedRoute>
             } />
 
