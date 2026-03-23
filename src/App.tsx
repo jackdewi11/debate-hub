@@ -10,7 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import JudgeDashboard from "./pages/judge/JudgeDashboard";
-import CongressBallotForm from "./pages/judge/CongressBallotForm";
+import CongressSessionForm from "./pages/judge/CongressSessionForm";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -41,9 +41,9 @@ const App = () => (
                 <JudgeDashboard />
               </ProtectedRoute>
             } />
-            <Route path="/judge/ballot/new" element={
+            <Route path="/judge/congress/new" element={
               <ProtectedRoute allowedRoles={["judge"]}>
-                <CongressBallotForm />
+                <CongressSessionForm />
               </ProtectedRoute>
             } />
 
