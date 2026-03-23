@@ -125,6 +125,198 @@ export type Database = {
         }
         Relationships: []
       }
+      congress_legislation: {
+        Row: {
+          created_at: string | null
+          id: string
+          legislation_type: string | null
+          session_id: string
+          sort_order: number | null
+          title: string
+          vote_outcome: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          legislation_type?: string | null
+          session_id: string
+          sort_order?: number | null
+          title: string
+          vote_outcome?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          legislation_type?: string | null
+          session_id?: string
+          sort_order?: number | null
+          title?: string
+          vote_outcome?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "congress_legislation_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "congress_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      congress_session_students: {
+        Row: {
+          competitor_id: string
+          created_at: string | null
+          final_rank: number | null
+          id: string
+          is_presiding_officer: boolean | null
+          po_comments: string | null
+          po_score: number | null
+          session_id: string
+        }
+        Insert: {
+          competitor_id: string
+          created_at?: string | null
+          final_rank?: number | null
+          id?: string
+          is_presiding_officer?: boolean | null
+          po_comments?: string | null
+          po_score?: number | null
+          session_id: string
+        }
+        Update: {
+          competitor_id?: string
+          created_at?: string | null
+          final_rank?: number | null
+          id?: string
+          is_presiding_officer?: boolean | null
+          po_comments?: string | null
+          po_score?: number | null
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "congress_session_students_competitor_id_fkey"
+            columns: ["competitor_id"]
+            isOneToOne: false
+            referencedRelation: "competitors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "congress_session_students_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "congress_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      congress_sessions: {
+        Row: {
+          chamber_number: string | null
+          created_at: string | null
+          id: string
+          judge_id: string
+          notes: string | null
+          questioning_format: string | null
+          round_number: number | null
+          session_name: string | null
+          speaking_order_method: string | null
+          status: string | null
+          submitted_at: string | null
+          tournament_name: string | null
+        }
+        Insert: {
+          chamber_number?: string | null
+          created_at?: string | null
+          id?: string
+          judge_id: string
+          notes?: string | null
+          questioning_format?: string | null
+          round_number?: number | null
+          session_name?: string | null
+          speaking_order_method?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          tournament_name?: string | null
+        }
+        Update: {
+          chamber_number?: string | null
+          created_at?: string | null
+          id?: string
+          judge_id?: string
+          notes?: string | null
+          questioning_format?: string | null
+          round_number?: number | null
+          session_name?: string | null
+          speaking_order_method?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          tournament_name?: string | null
+        }
+        Relationships: []
+      }
+      congress_speeches: {
+        Row: {
+          created_at: string | null
+          id: string
+          legislation_id: string | null
+          notes: string | null
+          questioning_score: number | null
+          session_id: string
+          side: string | null
+          speech_order: number | null
+          speech_score: number | null
+          student_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          legislation_id?: string | null
+          notes?: string | null
+          questioning_score?: number | null
+          session_id: string
+          side?: string | null
+          speech_order?: number | null
+          speech_score?: number | null
+          student_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          legislation_id?: string | null
+          notes?: string | null
+          questioning_score?: number | null
+          session_id?: string
+          side?: string | null
+          speech_order?: number | null
+          speech_score?: number | null
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "congress_speeches_legislation_id_fkey"
+            columns: ["legislation_id"]
+            isOneToOne: false
+            referencedRelation: "congress_legislation"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "congress_speeches_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "congress_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "congress_speeches_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "congress_session_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
