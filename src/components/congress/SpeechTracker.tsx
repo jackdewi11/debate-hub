@@ -160,7 +160,7 @@ export default function SpeechTracker({ data, onChange, onNext, onBack }: Props)
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="space-y-4">
               <div className="space-y-2">
                 <Label>Side</Label>
                 <Select
@@ -169,55 +169,57 @@ export default function SpeechTracker({ data, onChange, onNext, onBack }: Props)
                     setCurrentSpeech({ ...currentSpeech, side: v })
                   }
                 >
-                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="w-full sm:w-56"><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="affirmative">Affirmative (Pro)</SelectItem>
                     <SelectItem value="negative">Negative (Con)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label>Speech Score (1–6) *</Label>
-                <div className="flex gap-1">
-                  {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <Tooltip key={n}>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant={currentSpeech.speechScore === n ? "default" : "outline"}
-                          size="sm"
-                          className={
-                            currentSpeech.speechScore === n
-                              ? "bg-accent text-accent-foreground"
-                              : ""
-                          }
-                          onClick={() => setCurrentSpeech({ ...currentSpeech, speechScore: n })}
-                        >
-                          {n}
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>{SPEECH_SCORE_LABELS[n]}</TooltipContent>
-                    </Tooltip>
-                  ))}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Speech Score (1–6) *</Label>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5, 6].map((n) => (
+                      <Tooltip key={n}>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant={currentSpeech.speechScore === n ? "default" : "outline"}
+                            size="sm"
+                            className={
+                              currentSpeech.speechScore === n
+                                ? "bg-accent text-accent-foreground"
+                                : ""
+                            }
+                            onClick={() => setCurrentSpeech({ ...currentSpeech, speechScore: n })}
+                          >
+                            {n}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{SPEECH_SCORE_LABELS[n]}</TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label>Questioning (optional)</Label>
-                <div className="flex gap-1">
-                  {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <Button
-                      key={n}
-                      variant={currentSpeech.questioningScore === n ? "default" : "outline"}
-                      size="sm"
-                      className={
-                        currentSpeech.questioningScore === n
-                          ? "bg-primary text-primary-foreground"
-                          : ""
-                      }
-                      onClick={() => setCurrentSpeech({ ...currentSpeech, questioningScore: n })}
-                    >
-                      {n}
-                    </Button>
-                  ))}
+                <div className="space-y-2">
+                  <Label>Questioning (optional)</Label>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5, 6].map((n) => (
+                      <Button
+                        key={n}
+                        variant={currentSpeech.questioningScore === n ? "default" : "outline"}
+                        size="sm"
+                        className={
+                          currentSpeech.questioningScore === n
+                            ? "bg-primary text-primary-foreground"
+                            : ""
+                        }
+                        onClick={() => setCurrentSpeech({ ...currentSpeech, questioningScore: n })}
+                      >
+                        {n}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
