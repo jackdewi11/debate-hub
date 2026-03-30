@@ -176,7 +176,7 @@ export default function SpeechTracker({ data, onChange, onNext, onBack }: Props)
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Speech Score (1–6) *</Label>
                   <div className="flex gap-1">
