@@ -112,7 +112,6 @@ export default function SignupPage() {
               <SelectContent>
                 <SelectItem value="judge">Judge</SelectItem>
                 <SelectItem value="student">Student</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
               </SelectContent>
             </Select>
           </div>
