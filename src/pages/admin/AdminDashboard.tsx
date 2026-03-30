@@ -21,8 +21,11 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function AdminDashboard() {
-  const { profile } = useAuth();
-
+  const { profile, user } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmUser, setConfirmUser] = useState<{ id: string; name: string } | null>(null);
   const { data: ballots = [] } = useQuery({
     queryKey: ["admin-ballots"],
     queryFn: async () => {
