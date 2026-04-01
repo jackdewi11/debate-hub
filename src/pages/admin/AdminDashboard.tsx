@@ -180,7 +180,6 @@ export default function AdminDashboard() {
                       <p className="text-sm text-muted-foreground">{p.email}</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <p className="text-sm text-muted-foreground">{p.school || "—"}</p>
                       {p.id !== user?.id && (
                         <Button
                           variant="ghost"
