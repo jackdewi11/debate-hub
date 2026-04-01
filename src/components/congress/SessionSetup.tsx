@@ -186,10 +186,13 @@ export default function SessionSetup({ data, onChange, onNext }: Props) {
               <span className="text-sm font-medium text-muted-foreground w-6 shrink-0">
                 {i + 1}
               </span>
-              <Input
-                placeholder="Student name"
+              <StudentNameInput
                 value={s.name}
-                onChange={(e) => updateStudent(i, "name", e.target.value)}
+                onChange={(name, userId) => {
+                  const updated = [...data.students];
+                  updated[i] = { ...updated[i], name, userId: userId || updated[i].userId };
+                  update({ students: updated });
+                }}
                 className="flex-1"
               />
               <Input

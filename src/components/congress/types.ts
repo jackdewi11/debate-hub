@@ -1,6 +1,7 @@
 export interface SessionStudent {
   id?: string; // congress_session_students id (set after DB insert)
   competitorId?: string;
+  userId?: string; // linked auth user id (if matched to a registered student)
   name: string;
   school: string;
   isPresidingOfficer: boolean;
