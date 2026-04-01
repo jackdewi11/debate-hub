@@ -161,6 +161,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
+
+        {/* Competitor Linking */}
+        <CompetitorLinkingPanel />
+
         {/* Users */}
         <Card className="shadow-card">
           <CardHeader>
