@@ -103,7 +103,7 @@ export default function CongressSessionForm() {
         // Create competitor (guest)
         const { data: comp, error: compErr } = await supabase
           .from("competitors")
-          .insert({ name: s.name.trim(), school: s.school.trim() || null, is_guest: true })
+          .insert({ name: s.name.trim(), school: s.school.trim() || null, is_guest: !s.userId, user_id: s.userId || null })
           .select()
           .single();
         if (compErr) throw compErr;
