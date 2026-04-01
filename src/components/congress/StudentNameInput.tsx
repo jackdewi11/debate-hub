@@ -38,30 +38,29 @@ export default function StudentNameInput({ value, onChange, placeholder, classNa
       return;
     }
     setLoading(true);
-    // Search profiles that have student role
-    const { data } = await supabase
-      .from("profiles")
-      .select("id, full_name, email")
-      .ilike("full_name", `%${query}%`)
-      .limit(5);
+    const { data, error } = await supabase.rpc("search_students", {
+      _query: query,
+      _limit: 5,
+    });
 
-    if (data) {
-      // Filter to only students by checking roles
-      const studentProfiles: StudentSuggestion[] = [];
-      for (const p of data) {
-        const { data: roleData } = await supabase.rpc("get_user_role", { _user_id: p.id });
-        if (roleData === "student") {
-          studentProfiles.push(p as StudentSuggestion);
-        }
-      }
-      setSuggestions(studentProfiles);
+    if (error) {
+      setSuggestions([]);
+      setLoading(false);
+      return;
     }
+
+    setSuggestions((data || []).map((student) => ({
+      id: student.id,
+      full_name: student.full_name || "",
+      email: student.email || "",
+    })));
     setLoading(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    onChange(val); // no userId — typed manually
+    // Any manual edits should remove a previously selected linked account.
+    onChange(val, undefined);
     setShowSuggestions(true);
 
     if (debounceRef.current) clearTimeout(debounceRef.current);

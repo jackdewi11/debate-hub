@@ -190,7 +190,7 @@ export default function SessionSetup({ data, onChange, onNext }: Props) {
                 value={s.name}
                 onChange={(name, userId) => {
                   const updated = [...data.students];
-                  updated[i] = { ...updated[i], name, userId: userId || updated[i].userId };
+                  updated[i] = { ...updated[i], name, userId };
                   update({ students: updated });
                 }}
                 className="flex-1"
@@ -218,7 +218,7 @@ export default function SessionSetup({ data, onChange, onNext }: Props) {
             </div>
           ))}
           <p className="text-xs text-muted-foreground mt-2">
-            Type student names manually — they don't need existing accounts. Click the crown to designate the Presiding Officer.
+            Select a suggested registered student to link their account, or type manually to add a guest. Click the crown to designate the Presiding Officer.
           </p>
         </CardContent>
       </Card>

@@ -10,9 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Trash2, Save, Send } from "lucide-react";
+import StudentNameInput from "@/components/congress/StudentNameInput";
 
 interface CompetitorEntry {
   name: string;
+  userId?: string;
   school: string;
   rank: string;
   score: string;
@@ -94,7 +96,8 @@ export default function CongressBallotForm() {
           .insert({
             name: comp.name.trim(),
             school: comp.school.trim() || null,
-            is_guest: true,
+            is_guest: !comp.userId,
+            user_id: comp.userId || null,
           })
           .select()
           .single();
@@ -202,10 +205,14 @@ export default function CongressBallotForm() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Name *</Label>
-                    <Input
-                      placeholder="Type competitor name"
+                    <StudentNameInput
                       value={comp.name}
-                      onChange={(e) => updateCompetitor(index, "name", e.target.value)}
+                      onChange={(name, userId) => {
+                        const updated = [...competitors];
+                        updated[index] = { ...updated[index], name, userId };
+                        setCompetitors(updated);
+                      }}
+                      placeholder="Type competitor name"
                     />
                   </div>
                   <div className="space-y-2">

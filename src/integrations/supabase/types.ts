@@ -412,6 +412,14 @@ export type Database = {
         Args: { _email: string; _full_name: string; _role?: string }
         Returns: undefined
       }
+      search_students: {
+        Args: { _limit?: number; _query: string }
+        Returns: {
+          email: string | null
+          full_name: string | null
+          id: string
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "judge" | "student"
