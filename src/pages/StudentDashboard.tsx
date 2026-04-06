@@ -3,7 +3,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Target, TrendingUp, Award, MessageSquare, Mic } from "lucide-react";
+import { Target, TrendingUp, Award, Mic } from "lucide-react";
+import SessionDetail from "@/components/student/SessionDetail";
 import { format } from "date-fns";
 
 export default function StudentDashboard() {
