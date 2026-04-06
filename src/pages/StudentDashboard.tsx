@@ -3,7 +3,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Target, TrendingUp, Award, MessageSquare, Mic } from "lucide-react";
+import { Target, TrendingUp, Award, Mic } from "lucide-react";
+import SessionDetail from "@/components/student/SessionDetail";
 import { format } from "date-fns";
 
 export default function StudentDashboard() {
@@ -168,44 +169,13 @@ export default function StudentDashboard() {
             <CardHeader>
               <CardTitle className="font-display text-lg">Congress Session History</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {congressResults.map((entry: any) => {
-                  const session = entry.congress_sessions;
-                  const studentSpeeches = speeches.filter((s: any) => s.student_id === entry.id);
-                  return (
-                    <div
-                      key={entry.id}
-                      className="rounded-lg border border-border p-3 space-y-1"
-                    >
-                      <div className="flex items-center justify-between">
-                        <p className="font-medium text-foreground">
-                          {session?.tournament_name || "—"} — {session?.session_name || "Session"}
-                        </p>
-                        <span className="text-sm text-muted-foreground">
-                          {session?.submitted_at
-                            ? format(new Date(session.submitted_at), "MMM d, yyyy")
-                            : "—"}
-                        </span>
-                      </div>
-                      <div className="flex gap-4 text-sm text-muted-foreground">
-                        <span>Round {session?.round_number}</span>
-                        {entry.final_rank && <span>Rank: #{entry.final_rank}</span>}
-                        <span>{studentSpeeches.length} speech{studentSpeeches.length !== 1 ? "es" : ""}</span>
-                        {studentSpeeches.length > 0 && (
-                          <span>
-                            Avg: {(studentSpeeches.reduce((s: number, sp: any) => s + (sp.speech_score || 0), 0) / studentSpeeches.length).toFixed(1)}
-                          </span>
-                        )}
-                        {entry.is_presiding_officer && (
-                          <span className="text-accent font-medium">PO</span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
+             <CardContent>
+               <div className="space-y-3">
+                 {congressResults.map((entry: any) => (
+                   <SessionDetail key={entry.id} entry={entry} speeches={speeches} />
+                 ))}
+               </div>
+             </CardContent>
           </Card>
         )}
 
