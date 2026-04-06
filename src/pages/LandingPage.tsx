@@ -72,18 +72,6 @@ export default function LandingPage() {
               Submit format-specific ballots, track student performance over time, and manage
               tournaments — all in one polished platform for coaches, judges, and students.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/signup">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-8">
-                  Start Free <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/dashboard">
-                <Button size="lg" variant="outline" className="gap-2 px-8">
-                  View Demo Dashboard
-                </Button>
-              </Link>
-            </div>
           </motion.div>
         </div>
       </section>
