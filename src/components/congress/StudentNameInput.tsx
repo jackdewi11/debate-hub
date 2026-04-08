@@ -19,6 +19,7 @@ export default function StudentNameInput({ value, onChange, placeholder, classNa
   const [suggestions, setSuggestions] = useState<StudentSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -35,9 +36,11 @@ export default function StudentNameInput({ value, onChange, placeholder, classNa
   const searchStudents = async (query: string) => {
     if (query.length < 2) {
       setSuggestions([]);
+      setSearchError(null);
       return;
     }
     setLoading(true);
+    setSearchError(null);
     const { data, error } = await supabase.rpc("search_students", {
       _query: query,
       _limit: 5,
@@ -45,6 +48,7 @@ export default function StudentNameInput({ value, onChange, placeholder, classNa
 
     if (error) {
       setSuggestions([]);
+      setSearchError("Student lookup is unavailable right now.");
       setLoading(false);
       return;
     }
@@ -99,7 +103,9 @@ export default function StudentNameInput({ value, onChange, placeholder, classNa
       )}
       {showSuggestions && value.length >= 2 && suggestions.length === 0 && !loading && (
         <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-lg p-2">
-          <p className="text-xs text-muted-foreground text-center">No registered students found — name will be added as guest</p>
+          <p className="text-xs text-muted-foreground text-center">
+            {searchError || "No registered students found — name will be added as guest"}
+          </p>
         </div>
       )}
     </div>
