@@ -20,7 +20,7 @@ Key features include:
 
 Click the image below to watch the demo:
 
-[![Watch the video](docs/video-thumbnail.png)](docs/demo.mp4)
+[![Watch the video](FinalSS.png)](FinalSR.mp4)
 
 ---
 
