@@ -52,7 +52,7 @@ export default function DashboardLayout({ children, role = "student" }: Dashboar
       <aside className="hidden lg:flex lg:w-64 lg:flex-col gradient-navy">
         <div className="flex h-16 items-center gap-2 px-6">
           <Trophy className="h-6 w-6 text-gold" />
-          <span className="font-display text-lg font-bold text-sidebar-foreground">DebateHub</span>
+          <span className="font-display text-lg font-bold text-sidebar-foreground">BallotBase</span>
         </div>
         <nav className="flex-1 px-3 py-4 space-y-1">
           {navItems.map((item) => {
@@ -93,7 +93,7 @@ export default function DashboardLayout({ children, role = "student" }: Dashboar
           </button>
           <div className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-gold" />
-            <span className="font-display font-bold text-foreground">DebateHub</span>
+            <span className="font-display font-bold text-foreground">BallotBase</span>
           </div>
         </header>
 

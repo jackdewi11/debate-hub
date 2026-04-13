@@ -34,7 +34,7 @@ export default function LandingPage() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Trophy className="h-6 w-6 text-gold" />
-            <span className="font-display text-xl font-bold text-foreground">DebateHub</span>
+            <span className="font-display text-xl font-bold text-foreground">BallotBase</span>
           </div>
           <div className="flex items-center gap-3">
             <Link to="/login">
@@ -116,10 +116,10 @@ export default function LandingPage() {
         <div className="container flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Trophy className="h-4 w-4 text-gold" />
-            <span className="font-display text-sm font-semibold text-foreground">DebateHub</span>
+            <span className="font-display text-sm font-semibold text-foreground">BallotBase</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} DebateHub. Built for academic debate programs.
+            © {new Date().getFullYear()} BallotBase. Built for academic debate programs.
           </p>
         </div>
       </footer>

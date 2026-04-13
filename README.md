@@ -1,12 +1,12 @@
-# DebateHub
+# BallotBase
 
-DebateHub is a web platform designed for academic debate competitions, focused on improving the judging process and enabling meaningful student performance tracking. The platform allows judges to submit ballots, links student results to their accounts, and gives students access to their performance history.
+BallotBase is a web platform designed for academic debate competitions, focused on improving the judging process and enabling meaningful student performance tracking. The platform allows judges to submit ballots, links student results to their accounts, and gives students access to their performance history.
 
 ---
 
 ## 🎯 Project Overview
 
-The goal of DebateHub is to make debate tournaments more efficient, accurate, and data-driven. Judges can quickly submit results, while students and coaches can review performance trends and feedback over time.
+The goal of BallotBase is to make debate tournaments more efficient, accurate, and data-driven. Judges can quickly submit results, while students and coaches can review performance trends and feedback over time.
 
 ### Key Features
 - Congress-style judging interface (speech scoring + rankings)

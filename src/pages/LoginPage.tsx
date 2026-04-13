@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="text-center">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
             <Trophy className="h-6 w-6 text-gold" />
-            <span className="font-display text-xl font-bold text-foreground">DebateHub</span>
+            <span className="font-display text-xl font-bold text-foreground">BallotBase</span>
           </Link>
           <h1 className="font-display text-2xl font-bold text-foreground">Welcome back</h1>
           <p className="text-sm text-muted-foreground mt-1">Sign in to your account</p>
