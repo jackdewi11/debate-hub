@@ -1,8 +1,46 @@
-# Welcome to your Lovable project
+# DebateHub
 
-## Project info
+DebateHub is a web platform designed for academic debate competitions, with a focus on improving the judging process and tracking student performance over time. The platform allows judges to submit ballots, links student results to their accounts, and gives students access to their performance history.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
+
+## 🎯 Project Overview
+
+The goal of DebateHub is to make debate tournaments more efficient and data-driven. Judges can quickly submit results, while students and coaches can review performance trends and feedback.
+
+Key features include:
+- Judge ballot submission (with Congress-style scoring)
+- Linking judge-entered student names to registered accounts
+- Student performance tracking and history
+- Role-based access (Judge, Student, Admin)
+
+---
+
+## 🎥 Demo Video
+
+Click the image below to watch the demo:
+
+[![Watch the video](docs/video-thumbnail.png)](docs/demo.mp4)
+
+---
+
+## 🛠️ Technical Stack
+
+- **Frontend:** React + Vite (deployed on Vercel)
+- **Backend:** Node.js (optional services on Render)
+- **Database/Auth/Storage:** Supabase
+- **AI Development Tools:** Lovable, GitHub Copilot, ChatGPT (GPT-5.3)
+
+---
+
+## 🚀 Deployment Instructions
+
+To run this project locally:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/YOUR-USERNAME/debate-hub.git
+cd debate-hub
 
 ## How can I edit this code?
 
